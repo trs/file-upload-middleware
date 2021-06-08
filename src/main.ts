@@ -4,7 +4,7 @@ import type {RequestHandler} from 'express';
 
 const debug = buildDebug('file-upload-middleware');
 
-export const multiFileUpload = (
+export const fileUploadMiddleware = (
   fileHandleCallback: FileHandleCallback,
   options?: FileUploadOptions
 ): RequestHandler => (req, _, next) => {
@@ -52,12 +52,6 @@ export const multiFileUpload = (
 
   req.pipe(busboy);
 };
-
-export const singleFileUpload = (
-  field: string,
-  fileHandleCallback: FileHandleCallback,
-  options?: Omit<FileUploadOptions, 'fields'>
-) => multiFileUpload(fileHandleCallback, {...options, fields: [field]});
 
 export interface FileUploadOptions extends Partial<busboy.BusboyConfig> {
   fields?: string[];
